@@ -22,11 +22,12 @@ The dataset contains 1068 rows representing 1024 unique safety cases.
 
 ## Project Structure
 ```text
-bisoprolol-iccsr-analysis/
+bisoprolol-icsr-analysis/
 │
 ├── data/
-│   ├── Bisoprolol_iccsr_sample_1068rows.xlsx
+│   ├── Bisoprolol_icsr_sample_1068rows.xlsx
 │   ├── analysis_results.json
+│   ├── case_index.csv
 │   ├── age_group_distribution.png
 │   ├── gender_distribution.png
 │   ├── top_10_countries.png
@@ -37,10 +38,14 @@ bisoprolol-iccsr-analysis/
 │   └── visualize_data.py
 │
 ├── prompts/
+│   └── analysis_prompt.txt
 │
 ├── version1/
+│   ├── README.md
+│   └── generate_report.py
 │
 ├── README.md
+├── report_output.md
 └── requirements.txt
 ## Analysis Performed
 

@@ -1,0 +1,25 @@
+Bisoprolol Adverse Reaction Analysis Prompt
+
+Analyze the provided Bisoprolol adverse reaction dataset using Python and Pandas.
+
+Perform the following analysis:
+
+1. Calculate the total number of adverse reaction cases.
+2. Analyze the distribution of cases by age group.
+3. Analyze the distribution of cases by gender.
+4. Identify the top 10 countries by number of cases.
+5. Identify the most common adverse reactions.
+6. Identify the most common serious reactions.
+7. Analyze case trends over time.
+
+Save the analysis results in JSON format.
+
+Generate visualizations for:
+- Cases by Age Group
+- Cases by Gender
+- Top 10 Countries by Cases
+- Cases Trend Over Time
+
+Save all generated visualizations in the data directory.
+
+Use clear variable names, reusable Python code, and Pandas for data analysis.

@@ -19,30 +19,72 @@ def generate_report(results):
 
     report = []
 
-    # Title
+    # --------------------------------------------------
+    # TITLE
+    # --------------------------------------------------
+
     report.append("# Bisoprolol Adverse Reaction Analysis")
     report.append("")
 
-    # 1. Executive Summary
+    # --------------------------------------------------
+    # 1. EXECUTIVE SUMMARY
+    # --------------------------------------------------
+
     report.append("## 1. Executive Summary")
     report.append("")
-    report.append(
-        f"- **Total unique cases:** {results.get('total_cases', 'Not provided')}"
-    )
+
+    total_cases = results.get("total_cases", "Not provided")
+
+    report.append(f"- **Total unique cases:** {total_cases}")
+
+    reporting_start = results.get("reporting_period_start")
+    reporting_end = results.get("reporting_period_end")
+
+    if reporting_start and reporting_end:
+        report.append(
+            f"- **Reporting period:** {reporting_start} to {reporting_end}"
+        )
+
+    expedited_cases = results.get("expedited_cases")
+
+    if expedited_cases is not None:
+        report.append(
+            f"- **15-Day Alert / Expedited cases:** {expedited_cases}"
+        )
+
     report.append("")
 
-    # 2. Patient Demographics
+    # --------------------------------------------------
+    # 2. PATIENT DEMOGRAPHICS
+    # --------------------------------------------------
+
     report.append("## 2. Patient Demographics")
     report.append("")
 
-    age_group = results.get("most_common_age_group", "Not provided")
-    gender = results.get("most_common_gender", "Not provided")
+    age_group = results.get(
+        "most_common_age_group",
+        "Not provided"
+    )
 
-    report.append(f"- **Most common age group:** {age_group}")
-    report.append(f"- **Most common gender:** {gender}")
+    gender = results.get(
+        "most_common_gender",
+        "Not provided"
+    )
+
+    report.append(
+        f"- **Most common age group:** {age_group}"
+    )
+
+    report.append(
+        f"- **Most common gender:** {gender}"
+    )
+
     report.append("")
 
-    # 3. Seriousness
+    # --------------------------------------------------
+    # 3. CASE SERIOUSNESS
+    # --------------------------------------------------
+
     report.append("## 3. Case Seriousness")
     report.append("")
 
@@ -53,128 +95,251 @@ def generate_report(results):
         report.append("|---|---:|")
 
         for category, count in seriousness.items():
-            report.append(f"| {category} | {count} |")
+            report.append(
+                f"| {category} | {count} |"
+            )
     else:
-        report.append("Seriousness information was not provided.")
+        report.append(
+            "Seriousness information was not provided."
+        )
 
     report.append("")
 
-    # 4. Geographic Distribution
+    # --------------------------------------------------
+    # 4. GEOGRAPHIC DISTRIBUTION
+    # --------------------------------------------------
+
     report.append("## 4. Geographic Distribution")
     report.append("")
 
-    countries = results.get("top_5_countries", {})
+    countries = results.get(
+        "top_5_countries",
+        {}
+    )
 
     if countries:
         report.append("| Country | Cases |")
         report.append("|---|---:|")
 
         for country, count in countries.items():
-            report.append(f"| {country} | {count} |")
+            report.append(
+                f"| {country} | {count} |"
+            )
     else:
-        report.append("Geographic information was not provided.")
+        report.append(
+            "Geographic information was not provided."
+        )
 
     report.append("")
 
-    # 5. Reaction Outcomes
+    # --------------------------------------------------
+    # 5. REACTION OUTCOMES
+    # --------------------------------------------------
+
     report.append("## 5. Reaction Outcomes")
     report.append("")
 
-    outcomes = results.get("top_reaction_outcomes", {})
+    outcomes = results.get(
+        "top_reaction_outcomes",
+        {}
+    )
 
     if outcomes:
         report.append("| Outcome | Count |")
         report.append("|---|---:|")
 
         for outcome, count in outcomes.items():
-            report.append(f"| {outcome} | {count} |")
+            report.append(
+                f"| {outcome} | {count} |"
+            )
     else:
-        report.append("Reaction outcome information was not provided.")
+        report.append(
+            "Reaction outcome information was not provided."
+        )
 
     report.append("")
 
-    # 6. Most Common Adverse Reactions
+    # --------------------------------------------------
+    # 6. MOST COMMON ADVERSE REACTIONS
+    # --------------------------------------------------
+
     report.append("## 6. Most Common Adverse Reactions")
     report.append("")
 
-    reactions = results.get("most_common_reactions", {})
+    reactions = results.get(
+        "most_common_reactions",
+        {}
+    )
 
     if reactions:
         report.append("| Adverse Reaction | Cases |")
         report.append("|---|---:|")
 
         for reaction, count in reactions.items():
-            report.append(f"| {reaction} | {count} |")
+            report.append(
+                f"| {reaction} | {count} |"
+            )
     else:
-        report.append("Adverse reaction information was not provided.")
+        report.append(
+            "Adverse reaction information was not provided."
+        )
 
     report.append("")
 
-    # 7. Most Common Serious Reactions
+    # --------------------------------------------------
+    # 7. MOST COMMON SERIOUS REACTIONS
+    # --------------------------------------------------
+
     report.append("## 7. Most Common Serious Reactions")
     report.append("")
 
-    serious_reactions = results.get("most_common_serious_reactions", {})
+    serious_reactions = results.get(
+        "most_common_serious_reactions",
+        {}
+    )
 
     if serious_reactions:
         report.append("| Serious Reaction | Cases |")
         report.append("|---|---:|")
 
         for reaction, count in serious_reactions.items():
-            report.append(f"| {reaction} | {count} |")
+            report.append(
+                f"| {reaction} | {count} |"
+            )
     else:
-        report.append("Serious reaction information was not provided.")
+        report.append(
+            "Serious reaction information was not provided."
+        )
 
     report.append("")
 
-    # 8. Case Trends Over Time
+    # --------------------------------------------------
+    # 8. CASE TRENDS OVER TIME
+    # --------------------------------------------------
+
     report.append("## 8. Case Trends Over Time")
     report.append("")
 
-    monthly_cases = results.get("monthly_cases", {})
+    monthly_cases = results.get(
+        "monthly_cases",
+        {}
+    )
 
     if monthly_cases:
         report.append("| Month | Cases |")
         report.append("|---|---:|")
 
         for month, count in monthly_cases.items():
-            report.append(f"| {month} | {count} |")
+            report.append(
+                f"| {month} | {count} |"
+            )
     else:
-        report.append("Time-trend information was not provided.")
+        report.append(
+            "Time-trend information was not provided."
+        )
 
     report.append("")
 
-    # 9. Data Limitations
-    report.append("## 9. Data Limitations")
+    # --------------------------------------------------
+    # 9. CASE INDEX
+    # --------------------------------------------------
+
+    report.append("## 9. Case Index")
     report.append("")
-    report.append(
-        "- The analysis is based on the information available in the supplied dataset."
+
+    case_index_rows = results.get(
+        "case_index_rows"
     )
-    report.append(
-        "- Counts represent the deterministic analysis results stored in "
-        "`data/analysis_results.json`."
-    )
+
+    if case_index_rows is not None:
+        report.append(
+            f"- **Case index rows:** {case_index_rows}"
+        )
+
+        report.append(
+            "- The case-level index is stored in "
+            "`data/case_index.csv`."
+        )
+    else:
+        report.append(
+            "Case index information was not provided."
+        )
+
     report.append("")
 
-    # 10. Grounding
-    report.append("## 10. Grounding")
+    # --------------------------------------------------
+    # 10. DATA LIMITATIONS
+    # --------------------------------------------------
+
+    report.append("## 10. Data Limitations")
     report.append("")
+
     report.append(
-        "All quantitative statements in this report are derived from "
-        "`data/analysis_results.json`."
+        "- The analysis is based on the information "
+        "available in the supplied dataset."
+    )
+
+    report.append(
+        "- Counts represent deterministic analysis "
+        "results generated by the analysis pipeline."
+    )
+
+    report.append(
+        "- System Organ Class (SOC) analysis was not "
+        "performed because SOC information was not "
+        "available in the supplied analysis output."
+    )
+
+    report.append(
+        "- Expectedness assessment was not performed "
+        "because product label/reference safety "
+        "information was not supplied."
+    )
+
+    report.append(
+        "- Regulatory or sponsor action history was "
+        "not available in the supplied dataset."
+    )
+
+    report.append("")
+
+    # --------------------------------------------------
+    # 11. GROUNDING
+    # --------------------------------------------------
+
+    report.append("## 11. Grounding")
+    report.append("")
+
+    report.append(
+        "All quantitative statements in this report "
+        "are derived from `data/analysis_results.json`."
+    )
+
+    report.append(
+        "The case-level index is available in "
+        "`data/case_index.csv`."
     )
 
     return "\n".join(report)
 
 
 def main():
+
     results = load_analysis_results()
+
     report = generate_report(results)
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as file:
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8"
+    ) as file:
+
         file.write(report)
 
-    print(f"Report generated successfully: {OUTPUT_FILE}")
+    print(
+        f"Report generated successfully: {OUTPUT_FILE}"
+    )
 
 
 if __name__ == "__main__":

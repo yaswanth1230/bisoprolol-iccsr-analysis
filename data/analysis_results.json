@@ -1,5 +1,9 @@
 {
     "total_cases": 1024,
+    "reporting_period": {
+        "start": "2024-12-27",
+        "end": "2025-12-26"
+    },
     "seriousness": {
         "serious": 1023,
         "not serious": 1

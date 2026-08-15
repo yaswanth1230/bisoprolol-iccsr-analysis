@@ -277,7 +277,85 @@ monthly_cases = (
     .nunique()
 )
 
+# ---------------------------------------------------------
+# REPORTING PERIOD
+# ---------------------------------------------------------
 
+reporting_start = df["receivedate"].min()
+reporting_end = df["receivedate"].max()
+
+print("\nReporting period:")
+print("Start:", reporting_start.date())
+print("End:", reporting_end.date())
+
+
+# ---------------------------------------------------------
+# 15-DAY ALERT / EXPEDITED CASE ANALYSIS
+# ---------------------------------------------------------
+
+alert_cases = 0
+
+if "fulfillexpeditecriteria" in df.columns:
+
+    expedite_values = (
+        df["fulfillexpeditecriteria"]
+        .astype(str)
+        .str.strip()
+        .str.lower()
+    )
+
+    alert_mask = expedite_values.isin([
+        "1",
+        "1.0",
+        "yes",
+        "true",
+        "y",
+        "serious"
+    ])
+
+    alert_case_ids = df.loc[alert_mask, "safetyreportid"].dropna().unique()
+
+    alert_cases = len(alert_case_ids)
+
+print("\n15-Day Alert / Expedited cases:", alert_cases)
+
+
+# ---------------------------------------------------------
+# CASE INDEX
+# ---------------------------------------------------------
+
+case_index = (
+    df.groupby("safetyreportid")
+    .agg(
+        reaction=("patient_reaction_reactionmeddrapt",
+                  lambda x: "; ".join(
+                      sorted(set(x.dropna().astype(str)))
+                  )),
+
+        seriousness=("serious",
+                     lambda x: "serious"
+                     if (x.astype(str).str.lower() == "serious").any()
+                     else "not serious"),
+
+        reporting_date=("receivedate", "min"),
+
+        country=("primarysourcecountry", "first"),
+
+        outcome=("patient_reaction_reactionoutcome",
+                 lambda x: "; ".join(
+                     sorted(set(x.dropna().astype(str)))
+                 ))
+    )
+    .reset_index()
+)
+
+case_index.to_csv(
+    "data/case_index.csv",
+    index=False
+)
+
+print("\nCase index saved to data/case_index.csv")
+print("Case index rows:", len(case_index))
 # -------------------------------------------------
 # ANALYSIS RESULTS
 # -------------------------------------------------
@@ -287,7 +365,17 @@ analysis_results = {
     # Case-level count
     "total_cases": int(len(case_df)),
 
+    # Reporting period
+    "reporting_period": {
+        "start": str(df["receivedate"].min().date()),
+        "end": str(df["receivedate"].max().date())
+    },
+
     # Case-level seriousness
+    "seriousness": {
+        "serious": int(case_seriousness.get(True, 0)),
+        "not serious": int(case_seriousness.get(False, 0))
+    },
     "seriousness": {
         "serious": int(case_seriousness.get(True, 0)),
         "not serious": int(case_seriousness.get(False, 0))

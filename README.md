@@ -10,7 +10,7 @@ The dataset used in this project is:
 
 `Bisoprolol_iccsr_sample_1068rows.xlsx`
 
-The dataset contains **1068 cases**.
+The dataset contains 1068 rows representing 1024 unique safety cases.
 
 ## Technologies Used
 

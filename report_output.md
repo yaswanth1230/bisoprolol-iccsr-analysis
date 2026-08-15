@@ -2,7 +2,7 @@
 
 ## 1. Executive Summary
 
-- **Total unique cases:** 1068
+- **Total unique cases:** 1024
 
 ## 2. Patient Demographics
 
@@ -13,18 +13,18 @@
 
 | Classification | Cases |
 |---|---:|
-| serious | 1067 |
+| serious | 1023 |
 | not serious | 1 |
 
 ## 4. Geographic Distribution
 
 | Country | Cases |
 |---|---:|
-| eu | 356 |
-| united kingdom | 285 |
-| france | 189 |
-| canada | 58 |
-| italy | 53 |
+| eu | 328 |
+| united kingdom | 281 |
+| france | 187 |
+| canada | 56 |
+| italy | 52 |
 
 ## 5. Reaction Outcomes
 
@@ -70,16 +70,16 @@
 
 | Month | Cases |
 |---|---:|
-| 2024-12 | 22 |
-| 2025-01 | 82 |
-| 2025-02 | 101 |
-| 2025-03 | 92 |
+| 2024-12 | 21 |
+| 2025-01 | 75 |
+| 2025-02 | 94 |
+| 2025-03 | 83 |
 | 2025-04 | 78 |
-| 2025-05 | 84 |
-| 2025-06 | 90 |
-| 2025-07 | 113 |
-| 2025-08 | 67 |
-| 2025-09 | 79 |
+| 2025-05 | 80 |
+| 2025-06 | 84 |
+| 2025-07 | 109 |
+| 2025-08 | 64 |
+| 2025-09 | 76 |
 | 2025-10 | 102 |
 | 2025-11 | 75 |
 | 2025-12 | 83 |

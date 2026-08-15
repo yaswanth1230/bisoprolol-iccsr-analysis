@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 
 # Dataset path
 file_path = "data/Bisoprolol_icsr_sample_1068rows.xlsx"
@@ -226,36 +227,132 @@ monthly_cases = (
 
 print(monthly_cases)
 print("\nSaving analysis results...")
+print("\nSaving analysis results...")
+
+# -------------------------------------------------
+# CASE-LEVEL DATA
+# -------------------------------------------------
+
+# One row per unique safety report
+case_df = df.drop_duplicates(subset="safetyreportid").copy()
+
+# Use case-level seriousness calculated above
+case_seriousness = case_serious.value_counts()
+
+print("\nFinal case-level results:")
+print("Total unique cases:", len(case_df))
+print("Serious cases:", int(case_seriousness.get(True, 0)))
+print("Non-serious cases:", int(case_seriousness.get(False, 0)))
+
+
+# -------------------------------------------------
+# CASE-LEVEL AGE / GENDER / COUNTRY
+# -------------------------------------------------
+
+case_age = case_df["age_group"].dropna()
+
+case_gender = (
+    case_df["patient_patientsex"]
+    .dropna()
+    .astype(str)
+    .str.lower()
+)
+
+case_country = (
+    case_df["primarysourcecountry"]
+    .dropna()
+    .astype(str)
+    .str.lower()
+)
+
+
+# -------------------------------------------------
+# MONTHLY UNIQUE CASES
+# -------------------------------------------------
+
+monthly_cases = (
+    df.dropna(subset=["receivedate"])
+    .groupby(df.loc[df["receivedate"].notna(), "receivedate"].dt.to_period("M"))
+    ["safetyreportid"]
+    .nunique()
+)
+
+
+# -------------------------------------------------
+# ANALYSIS RESULTS
+# -------------------------------------------------
 
 analysis_results = {
-    "total_cases": len(df),
 
-    "seriousness": df["serious"].value_counts(dropna=False).to_dict(),
+    # Case-level count
+    "total_cases": int(len(case_df)),
 
-    "most_common_age_group": df["age_group"].value_counts().idxmax(),
+    # Case-level seriousness
+    "seriousness": {
+        "serious": int(case_seriousness.get(True, 0)),
+        "not serious": int(case_seriousness.get(False, 0))
+    },
 
-    "most_common_gender": df["patient_patientsex"].value_counts(
-        dropna=True
-    ).idxmax(),
+    # Case-level demographics
+    "most_common_age_group": (
+        case_age.value_counts().idxmax()
+        if not case_age.empty
+        else None
+    ),
 
-    "top_5_countries": df["primarysourcecountry"].value_counts().head(5).to_dict(),
+    "most_common_gender": (
+        case_gender.value_counts().idxmax()
+        if not case_gender.empty
+        else None
+    ),
 
-    "top_reaction_outcomes": reaction_outcomes.value_counts().head(5).to_dict(),
+    # Case-level countries
+    "top_5_countries": (
+        case_country.value_counts()
+        .head(5)
+        .to_dict()
+    ),
 
-    "most_common_reactions": reaction_counts.head(10).to_dict(),
+    # Reaction-level outcomes
+    "top_reaction_outcomes": (
+        reaction_outcomes
+        .value_counts()
+        .head(5)
+        .to_dict()
+    ),
 
-    "most_common_serious_reactions": serious_reactions.head(10).to_dict(),
+    # Reaction-level adverse events
+    "most_common_reactions": (
+        reaction_counts
+        .head(10)
+        .to_dict()
+    ),
 
+    # Serious adverse events
+    "most_common_serious_reactions": (
+        serious_reactions
+        .head(10)
+        .to_dict()
+    ),
+
+    # Unique cases per month
     "monthly_cases": {
-    str(k): int(v)
-    for k, v in monthly_cases.items()
+        str(k): int(v)
+        for k, v in monthly_cases.items()
+    }
 }
-}
 
 
-import json
+# -------------------------------------------------
+# SAVE JSON
+# -------------------------------------------------
 
-with open("data/analysis_results.json", "w") as f:
-    json.dump(analysis_results, f, indent=4, default=str)
+with open("data/analysis_results.json", "w", encoding="utf-8") as f:
+    json.dump(
+        analysis_results,
+        f,
+        indent=4,
+        ensure_ascii=False
+    )
 
 print("Analysis results saved to data/analysis_results.json")

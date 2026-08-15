@@ -1,0 +1,62 @@
+{
+    "total_cases": 1068,
+    "seriousness": {
+        "serious": 1067,
+        "not serious": 1
+    },
+    "most_common_age_group": "61-80",
+    "most_common_gender": "female",
+    "top_5_countries": {
+        "eu": 356,
+        "united kingdom": 285,
+        "france": 189,
+        "canada": 58,
+        "italy": 53
+    },
+    "top_reaction_outcomes": {
+        "recovered/resolved": 1347,
+        "unknown": 1135,
+        "not recovered/not resolved/ongoing": 569,
+        "recovering/resolving": 420,
+        "fatal": 137
+    },
+    "most_common_reactions": {
+        "Acute kidney injury": 22,
+        "Drug ineffective": 12,
+        "Cerebral haemorrhage": 7,
+        "Hyponatraemia": 6,
+        "Cholestasis": 6,
+        "Hypokalaemia": 6,
+        "Hepatic cytolysis": 5,
+        "Drug interaction": 5,
+        "Joint swelling": 5,
+        "Muscle spasms": 4
+    },
+    "most_common_serious_reactions": {
+        "Acute kidney injury": 22,
+        "Drug ineffective": 12,
+        "Cerebral haemorrhage": 7,
+        "Hyponatraemia": 6,
+        "Cholestasis": 6,
+        "Hypokalaemia": 6,
+        "Hepatic cytolysis": 5,
+        "Drug interaction": 5,
+        "Joint swelling": 5,
+        "Muscle spasms": 4
+    },
+    "monthly_cases": {
+        "2024-12": 22,
+        "2025-01": 82,
+        "2025-02": 101,
+        "2025-03": 92,
+        "2025-04": 78,
+        "2025-05": 84,
+        "2025-06": 90,
+        "2025-07": 113,
+        "2025-08": 67,
+        "2025-09": 79,
+        "2025-10": 102,
+        "2025-11": 75,
+        "2025-12": 83
+    }
+}
